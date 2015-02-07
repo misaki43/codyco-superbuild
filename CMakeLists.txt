@@ -48,11 +48,24 @@ include(FindOrBuildPackage)
 include(YCMEPHelper)
 
 # Required system dependencies
-find_package(Boost REQUIRED system thread)
-
-if(CODYCO_USES_EIGEN_320)
-    find_package(Eigen3 3.2)
-endif()
+# On Windows, search for boost/Eigen otherwise
+# build the few necessary boost components 
+# and eigen with the superbuild 
+# On Linux and OS X, we expect the user 
+# to install boost with native tools (apt-get / brew)
+if(WIN32)
+    find_or_build_package(Eigen3)
+    find_package(Boost)
+    if(NOT ${Boost_FOUND})
+        # This Boost dependencies are required by urdfdom
+        find_or_build_package(Boost COMPONENTS smart_ptr algorithm lexical_cast)
+    endif()
+else(WIN32)
+    find_package(Boost REQUIRED system thread)
+    if(CODYCO_USES_EIGEN_320)
+        find_package(Eigen3 3.2)
+    endif()
+else(WIN32)
 
 if(CODYCO_USES_URDFDOM)
     find_or_build_package(kdl_format_io)
