@@ -65,7 +65,7 @@ else(WIN32)
     if(CODYCO_USES_EIGEN_320)
         find_package(Eigen3 3.2)
     endif()
-else(WIN32)
+endif(WIN32)
 
 if(CODYCO_USES_URDFDOM)
     find_or_build_package(kdl_format_io)
