@@ -51,7 +51,7 @@ if(NOT CMAKE_VERSION VERSION_LESS 3.0)
 endif()
 
 # Bootstrap YCM
-set(YCM_TAG v0.1.1)
+#set(YCM_TAG v0.1.1)
 include(YCMBootstrap)
 
 include(FindOrBuildPackage)
